@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
-import { motion, useSpring } from "framer-motion" // or 'motion/react' depending on your package
+import { motion, useSpring } from "framer-motion"
 
 const DefaultCursorSVG = () => {
   return (
@@ -74,7 +74,7 @@ export function SmoothCursor({
     restDelta: 0.001,
   },
 }) {
-  const [isMoving, setIsMoving] = useState(false)
+  const [enabled, setEnabled] = useState(false)
   const lastMousePos = useRef({ x: 0, y: 0 })
   const velocity = useRef({ x: 0, y: 0 })
   const lastUpdateTime = useRef(Date.now())
@@ -97,6 +97,11 @@ export function SmoothCursor({
   })
 
   useEffect(() => {
+    // Check if device has a fine pointer (Laptop/Desktop)
+    const isDesktop = window.matchMedia("(pointer: fine)").matches
+    if (!isDesktop) return
+    setEnabled(true)
+
     const updateVelocity = (currentPos) => {
       const currentTime = Date.now()
       const deltaTime = currentTime - lastUpdateTime.current
@@ -135,17 +140,14 @@ export function SmoothCursor({
         rotation.set(accumulatedRotation.current)
         previousAngle.current = currentAngle
 
+        // Subtle shrink while moving
         scale.set(0.95)
-        setIsMoving(true)
-
-        const timeout = setTimeout(() => {
-          scale.set(1)
-          setIsMoving(false)
-        }, 150)
-
-        return () => clearTimeout(timeout)
       }
     }
+
+    // Handle the "Squeeze" on Click
+    const handleMouseDown = () => scale.set(0.7)
+    const handleMouseUp = () => scale.set(1)
 
     let rafId
     const throttledMouseMove = (e) => {
@@ -157,16 +159,23 @@ export function SmoothCursor({
       })
     }
 
-    // Hide the default cursor
+    // Hide default cursor
     document.body.style.cursor = "none"
     window.addEventListener("mousemove", throttledMouseMove)
+    window.addEventListener("mousedown", handleMouseDown)
+    window.addEventListener("mouseup", handleMouseUp)
 
     return () => {
       window.removeEventListener("mousemove", throttledMouseMove)
+      window.removeEventListener("mousedown", handleMouseDown)
+      window.removeEventListener("mouseup", handleMouseUp)
       document.body.style.cursor = "auto"
       if (rafId) cancelAnimationFrame(rafId)
     }
   }, [cursorX, cursorY, rotation, scale])
+
+  // Don't render on mobile/tablet
+  if (!enabled) return null
 
   return (
     <motion.div
@@ -184,11 +193,6 @@ export function SmoothCursor({
       }}
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
-      transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 30,
-      }}
     >
       {cursor}
     </motion.div>

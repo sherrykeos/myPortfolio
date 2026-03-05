@@ -1,9 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap");
 @import "tailwindcss";
 
-* {
-  cursor: none !important;
+
+
+/* Only apply this to devices with a mouse (Desktop/Laptop) */
+@media (pointer: fine) {
+  /* Force hide the cursor on EVERYTHING */
+  *, 
+  *::before, 
+  *::after {
+    cursor: none !important;
+  }
+
+  /* Specifically target common interactive elements that override cursors */
+  a, 
+  button, 
+  img, 
+  svg,
+  input,
+  [role="button"] {
+    cursor: none !important;
+  }
 }
+
+/* Ensure mobile users still have their default touch behavior */
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+}
+
+
 
 @theme {
   --color-primary: #030412;
