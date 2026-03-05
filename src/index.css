@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap");
 @import "tailwindcss";
 
+* {
+  cursor: none !important;
+}
+
 @theme {
   --color-primary: #030412;
   --color-midnight: #06091f;
