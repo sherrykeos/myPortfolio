@@ -10,7 +10,9 @@ import {
   SiTypescript,
   SiTensorflow,
   SiPythonanywhere,
-  SiFastapi
+  SiFastapi,
+  SiOllama,
+  SiOpenai
 } from "react-icons/si";
 import { FaNode } from "react-icons/fa";
 import { MdOutlineSecurity } from "react-icons/md";
@@ -171,6 +173,51 @@ export const myProjects = [
       },
     ],
   },
+{
+  id: 2,
+  title: "SAW - Sovereign Agentic AI Workbench",
+  description:
+    "SAW is a self-hosted, agentic AI workbench designed for confidential industrial workflows. It uses open-weight language models running locally to plan and execute multi-step tasks, process documents, and generate deliverables without sending sensitive data to external cloud services.",
+  subDescription: [
+    "Local LLM integration with task-based model selection",
+    "Agentic workflow orchestration with multi-step planning and tool execution",
+    "Multimodal document understanding for scanned PDFs and images",
+    "Local file operations and sandboxed code execution",
+    "Designed for air-gapped deployment and confidential data processing"
+  ],
+  // href: "",
+  github: "https://github.com/sherrykeos/SAW",
+  live: "https://github.com/sherrykeos/SAW",
+  logo: "",
+  image: "/assets/projects/SAW_img.png",
+  tags: [
+    {
+      id: 1,
+      name: "Python",
+      path: SiPython,
+    },
+    {
+      id: 2,
+      name: "Ollama",
+      path: SiOllama,
+    },
+    {
+      id: 3,
+      name: "LLMs",
+      path: SiOpenai,
+    },
+    {
+      id: 4,
+      name: "FastAPI",
+      path: SiFastapi,
+    },
+    {
+      id: 5,
+      name: "React",
+      path: SiReact,
+    },
+  ],
+},
 
   {
     id: 4,
