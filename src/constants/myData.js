@@ -318,6 +318,11 @@ export const mySocials = [
     icon: "/assets/socials/linkedIn.svg",
   },
   {
+    name: "X (Twitter)",
+    href: "https://x.com/sherrykeos",
+    icon: "/assets/socials/x.svg",
+  },
+  {
     name: "Instagram",
     href: "https://www.instagram.com/sherry.keos/",
     icon: "/assets/socials/instagram.svg",
